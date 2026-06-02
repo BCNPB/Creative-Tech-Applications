@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creative Tech Applications</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --card: #22213a;
+    --accent1: #FF6B6B; /* Vibrant red */
+    --accent2: #6EDCFF; /* Lighter blue */
+    --accent3: #98FB98; /* Pale green */
+    --text: #fffffe;
+    --muted: #a7a9be;
+    --border: rgba(255,255,255,0.08);
+    --google: #4285f4;
+    --drive: #0f9d58;
+    --canva: #7d3cff;
+    --gemini: #1a73e8;
+  }
+
+  [data-theme="light"] {
+    --bg: #f8f8f8;
+    --card: #ffffff;
+    --accent1: #E24B6B; /* Deeper pink/red for light mode */
+    --accent2: #5AA9E6; /* Contrasting blue for light mode */
+    --accent3: #A7D980; /* Fresh green for light mode */
+    --text: #333333;
+    --muted: #666666;
+    --border: rgba(0,0,0,0.08);
+    --google: #4285f4;
+    --drive: #0f9d58;
+    --canva: #7d3cff;
+    --gemini: #1a73e8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:400; line-height:1.8; overflow-x:hidden; font-size:1.05rem; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(15,14,23,.88); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 2rem; height:60px; gap:1rem;
+  }
+  .nav-logo { font-family:'DM Mono',monospace; font-size:.72rem; letter-spacing:.15em; color:var(--accent1); text-transform:uppercase; white-space:nowrap; }
+  .nav-links { display:flex; gap:1.2rem; list-style:none; flex-wrap:wrap; }
+  .nav-links a { font-size:.85rem; color:var(--muted); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
+  .nav-links a:hover { color:var(--text); }
+  .lang-toggle { display:flex; gap:.4rem; flex-shrink:0; }
+  .lang-btn { font-family:'DM Mono',monospace; font-size:.78rem; padding:.25rem .6rem; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; }
+  .lang-btn.active { border-color:var(--accent1); color:var(--accent1); }
+
+  .theme-toggle {
+    background:none; border:none; color:var(--muted); font-size:1.1rem; cursor:pointer;
+    margin-left:.8rem; transition:color .2s;
+  }
+  .theme-toggle:hover { color:var(--text); }
+
+  /* HERO */
+  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
+  .hero-bg { position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255,107,53,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(78,205,196,.10) 0%, transparent 60%); }
+  .hero-tag { font-family:'DM Mono',monospace; font-size:.8rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent1); margin-bottom:1.5rem; border:1px solid rgba(255,107,53,.3); padding:.3rem .9rem; border-radius:20px; display:inline-block; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,7vw,5.2rem); font-weight:900; line-height:1.05; margin-bottom:1.5rem; }
+  .hero h1 span { color:var(--accent1); }
+  .hero-sub { font-size:1.15rem; color:var(--muted); max-width:520px; margin:0 auto 2.5rem; }
+  .hero-chips { display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-top:2.5rem; }
+  .hero-chip { display:flex; align-items:center; gap:.5rem; padding:.6rem 1.2rem; border-radius:8px; border:1px solid var(--border); background:rgba(255,255,255,.03); font-size:.9rem; font-weight:500; color:var(--muted); text-decoration:none; transition:all .25s; }
+  .hero-chip:hover { border-color:var(--accent2); color:var(--text); background:rgba(78,205,196,.05); transform:translateY(-2px); }
+
+  .hero-chip-google:hover { border-color:var(--google); background:rgba(66,133,244,.08); }
+  .hero-chip-drive:hover  { border-color:var(--drive);  background:rgba(15,157,88,.08);  }
+  .hero-chip-canva:hover  { border-color:var(--canva);  background:rgba(125,60,255,.08); }
+  .hero-chip-gemini:hover { border-color:var(--gemini); background:rgba(26,115,232,.08); }
+  .chip-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+  /* SECTIONS */
+  .section { padding:5rem 2rem; max-width:940px; margin:0 auto; }
+  .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:2.2rem; }
+  .section-number { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.15em; color:var(--accent1); opacity:.55; }
+  .section-tag { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); padding:.2rem .7rem; border:1px solid var(--border); border-radius:4px; }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,2.8rem); font-weight:700; line-height:1.15; margin-bottom:.7rem; }
+  .section-title em { color:var(--accent2); font-style:normal; }
+  .section-desc { color:var(--muted); max-width:580px; font-size:1rem; }
+
+  /* TOOL BADGE */
+  .tool-badge { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .9rem; border-radius:6px; font-family:'DM Mono',monospace; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:1.4rem; }
+
+  /* ACCESS BOX */
+  .access-box { display:flex; align-items:flex-start; gap:.75rem; padding:1.1rem 1.3rem; border-radius:8px; background:rgba(255,255,255,.03); border:1px solid var(--border); margin-bottom:1.8rem; font-size:.9rem; color:var(--muted); }
+  .access-box strong { color:var(--text); font-weight:500; }
+  .access-icon { font-size:1.1rem; flex-shrink:0; margin-top:.1rem; }
+
+  /* STEPS */
+  .steps { display:flex; flex-direction:column; gap:.9rem; }
+  .step { display:grid; grid-template-columns:44px 1fr; gap:.9rem; align-items:start; padding:1.1rem 1.4rem; background:var(--card); border:1px solid var(--border); border-radius:12px; transition:border-color .2s; }
+  .step:hover { border-color:rgba(255,255,255,.15); }
+  .step-num { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:.72rem; font-weight:500; margin-top:.1rem; flex-shrink:0; }
+  .step-title { font-weight:500; font-size:.93rem; margin-bottom:.28rem; }
+  .step-body { font-size:.85rem; color:var(--muted); line-height:1.65; }
+  .step-tip { margin-top:.55rem; padding:.45rem .7rem; background:rgba(255,255,255,.04); border-left:2px solid var(--accent3); border-radius:0 6px 6px 0; font-size:.79rem; color:var(--accent3); }
+
+  /* TWO-COL */
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
+  @media(max-width:620px){ .two-col { grid-template-columns:1fr; } }
+
+  /* FEATURE CARD */
+  .feature-card { padding:1.3rem; background:var(--card); border:1px solid var(--border); border-radius:12px; transition:transform .2s,border-color .2s; }
+  .feature-card:hover { transform:translateY(-3px); border-color:rgba(255,255,255,.15); }
+  .feature-icon { font-size:1.4rem; margin-bottom:.65rem; }
+  .feature-title { font-weight:500; font-size:.9rem; margin-bottom:.35rem; }
+
+  /* TRANSLATION BOX */
+  .translation-box { margin-top:1.4rem; padding:1.1rem 1.4rem; background:rgba(78,205,196,.05); border:1px solid rgba(78,205,196,.2); border-radius:10px; }
+  .translation-label { font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); margin-bottom:.55rem; }
+  .trans-text { font-size:.83rem; color:var(--muted); }
+
+  /* DIVIDER */
+  .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+
+  /* QUICK REF */
+  .quick-ref { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
+  .ref-card { padding:1rem 1.2rem; background:var(--card); border:1px solid var(--border); border-radius:10px; }
+  .ref-key { font-family:'DM Mono',monospace; font-size:.72rem; padding:.2rem .5rem; border-radius:4px; display:inline-block; margin-bottom:.4rem; }
+  .ref-val { font-size:.81rem; color:var(--muted); }
+
+  /* CALLOUT */
+  .callout { padding:1.1rem 1.4rem; border-radius:10px; border:1px solid; margin:1.4rem 0; font-size:.86rem; }
+  .callout.warn { border-color:rgba(255,230,109,.3); background:rgba(255,230,109,.05); color:var(--accent3); }
+  .callout strong { display:block; margin-bottom:.3rem; }
+
+  /* FOOTER */
+  footer { text-align:center; padding:3rem 2rem; border-top:1px solid var(--border); color:var(--muted); font-size:.78rem; }
+  footer span { color:var(--accent1); }
+
+  /* LANG */
+  .L { display:none; }
+  .L.on { display:inline; }
+  .LB { display:none; }
+  .LB.on { display:block; }
+
+  /* LINKS */
+  a.btn-link { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1.1rem; border-radius:8px; text-decoration:none; font-size:.81rem; font-weight:500; border:1px solid var(--border); color:var(--muted); transition:all .2s; margin-top:1rem; }
+  a.btn-link:hover { color:var(--text); border-color:rgba(255,255,255,.2); transform:translateY(-1px); }
+
+  /* LIST */
+  .ul-clean { list-style:none; display:flex; flex-direction:column; gap:.35rem; }
+  .ul-clean li::before { content:'→ '; color:var(--accent2); font-family:'DM Mono',monospace; font-size:.78rem; }
+  .ul-clean li { font-size:.85rem; color:var(--muted); }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(22px); transition:opacity .55s,transform .55s; }
+  .reveal.visible { opacity:1; transform:none; }
+
+  /* COLOR HELPERS */
+  .badge-google { background:rgba(66,133,244,.12); color:var(--google); border:1px solid rgba(66,133,244,.25); }
+  .badge-drive  { background:rgba(15,157,88,.12);  color:var(--drive);  border:1px solid rgba(15,157,88,.25);  }
+  .badge-canva  { background:rgba(125,60,255,.12); color:var(--canva);  border:1px solid rgba(125,60,255,.25); }
+  .badge-gemini { background:rgba(26,115,232,.12); color:var(--gemini); border:1px solid rgba(26,115,232,.25); }
+  .sn-google { background:rgba(66,133,244,.15); color:var(--google); }
+  .sn-drive  { background:rgba(15,157,88,.15);  color:var(--drive);  }
+  .sn-canva  { background:rgba(125,60,255,.15); color:var(--canva);  }
+  .sn-gemini { background:rgba(26,115,232,.15); color:var(--gemini); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🎓 Creative Tech Applications</div>
+  <ul class="nav-links">
+    <li><a href="#forms">Forms</a></li>
+    <li><a href="#drive">Drive</a></li>
+    <li><a href="#canva">Canva</a></li>
+    <li><a href="#gemini">Gemini</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('th')">ภาษาไทย</button>
+  </div>
+  <button id="theme-toggle" class="theme-toggle">
+    <span class="light-icon">☀️</span>
+    <span class="dark-icon" style="display:none;">🌙</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">📚 Educator Resource</div>
+  <h1>
+    <span class="L on" data-l="en">Creative Tech<br><span>Applications</span></span>
+    <span class="L"      data-l="th">การประยุกต์ใช้เทคโนโลยี<br><span>เพื่อการสร้างสรรค์</span></span>
+  </h1>
+  <p class="hero-sub">
+    <span class="L on" data-l="en">A practical guide to Google Forms, Google Drive, Canva, and Gemini AI —</span>
+    <span class="L"    data-l="th">คู่มือการใช้งาน Google Forms, Google Drive, Canva และ Gemini AI —</span>
+  </p>
+  <div class="hero-chips">
+    <a class="hero-chip hero-chip-google" href="#forms"><span class="chip-dot" style="background:var(--google)"></span>Google Forms</a>
+    <a class="hero-chip hero-chip-drive" href="#drive"><span class="chip-dot" style="background:var(--drive)"></span>Google Drive</a>
+    <a class="hero-chip hero-chip-canva" href="#canva"><span class="chip-dot" style="background:var(--canva)"></span>Canva</a>
+    <a class="hero-chip hero-chip-gemini" href="#gemini"><span class="chip-dot" style="background:var(--gemini)"></span>Gemini AI</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ GOOGLE FORMS ═══════════════ -->
+<section class="section reveal" id="forms">
+  <div class="section-header">
+    <span class="section-number">01</span>
+    <span class="section-tag">Evaluation &amp; research forms.</span>
+  </div>
+  <div class="tool-badge badge-google">📋 Google Forms</div>
+  <h2 class="section-title">
+    <span class="L on" data-l="en">Create <em>Forms</em> Evaluation &amp; research</span>
+    <span class="L"    data-l="th">สร้าง <em>แบบฟอร์ม</em> สำหรับการประเมินและแบบสำรวจ</span>
+  </h2>
+  <p class="section-desc">
+    <span class="L on" data-l="en">Google Forms is a free tool for building quizzes, or evaluations. Results are automatically collected in Google Sheets.</span>
+    <span class="L"    data-l="th">Google Forms เป็นเครื่องมือฟรีสำหรับสร้างแบบสำรวจ แบบทดสอบ และแบบประเมิน ผลลัพธ์จะถูกรวบรวมโดยอัตโนมัติใน Google Sheets</span>
+  </p>
+
+  <!-- ACCESS -->
+  <div class="access-box" style="margin-top:1.6rem;">
+    <div class="access-icon">🔑</div>
+    <div>
+      <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
+      <span class="L on" data-l="en"> Visit <strong>forms.google.com</strong>. Sign in with a Google account (Gmail, Google Workspace, or school account).</span>
+      <span class="L"    data-l="th"> ไปที่ <strong>forms.google.com</strong> แล้วลงชื่อเข้าใช้ด้วยบัญชี Google (Gmail, Google Workspace หรือบัญชีโรงเรียน)</span>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num sn-google">01</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Start a New Form</span><span class="L" data-l="th">เริ่มต้นแบบฟอร์มใหม่</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click <strong>Blank form</strong> or choose a template (try the <em>Education</em> category for ready-made quiz formats).</span>
+          <span class="L"    data-l="th">คลิก <strong>แบบฟอร์มเปล่า</strong> หรือเลือกเทมเพลต (ลองหมวด <em>การศึกษา</em> สำหรับรูปแบบแบบทดสอบสำเร็จรูป)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-google">02</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Add Questions</span><span class="L" data-l="th">เพิ่มคำถาม</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click the <strong>+</strong> button and choose a question type — Multiple choice, Checkboxes, Short answer, Paragraph, Dropdown, Linear scale, or Date.</span>
+          <span class="L"    data-l="th">คลิกปุ่ม <strong>+</strong> และเลือกประเภทคำถาม — หลายตัวเลือก, ช่องทำเครื่องหมาย, คำตอบสั้น, ย่อหน้า, เมนูเลื่อนลง, ระดับเชิงเส้น หรือวันที่</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-google">03</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Enable Quiz Mode</span><span class="L" data-l="th">เปิดใช้งานโหมดแบบทดสอบ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en"><strong>Settings ⚙️ → Quizzes → "Make this a quiz."</strong> Assign point values and correct answers per question. Students can see their score immediately after submitting if you allow it.</span>
+          <span class="L"    data-l="th"><strong>การตั้งค่า ⚙️ → แบบทดสอบ → "ทำเป็นแบบทดสอบ"</strong> กำหนดคะแนนและคำตอบที่ถูกต้องแต่ละข้อ นักเรียนจะเห็นคะแนนทันทีหลังส่ง หากคุณอนุญาต</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-google">04</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Share the Form</span><span class="L" data-l="th">แชร์แบบฟอร์ม</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click <strong>Send</strong> — copy the link, share by email, embed as HTML, or generate a <strong>QR code</strong> via the QR icon.</span>
+          <span class="L"    data-l="th">คลิก <strong>ส่ง</strong> — คัดลอกลิงก์, แชร์ทางอีเมล, ฝังเป็น HTML หรือสร้าง <strong>QR code</strong> ผ่านไอคอน QR</span>
+        </div>
+        <div class="step-tip">💡 <span class="L on" data-l="en">Use "Sections" to group related questions and guide respondents through a logical flow.</span><span class="L" data-l="th">ใช้ "ส่วน" เพื่อจัดกลุ่มคำถามและนำผู้ตอบผ่านขั้นตอนที่มีตรรกะ</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-google">05</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">View Responses</span><span class="L" data-l="th">ดูการตอบกลับ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Open the <strong>Responses</strong> tab for a summary and individual answers. Click the <strong>Sheets icon</strong> to export all data to Google Sheets.</span>
+          <span class="L"    data-l="th">เปิดแท็บ <strong>การตอบกลับ</strong> เพื่อดูสรุปและคำตอบแต่ละข้อ คลิก <strong>ไอคอน Sheets</strong> เพื่อส่งออกข้อมูลทั้งหมดไปยัง Google Sheets</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="two-col" style="margin-top:1.8rem;">
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title"><span class="L on" data-l="en">Common Uses</span><span class="L" data-l="th">การใช้งานทั่วไป</span></div>
+      <ul class="ul-clean">
+        <li><span class="L on" data-l="en">Student feedback &amp; course evaluations</span><span class="L" data-l="th">ข้อเสนอแนะนักเรียนและการประเมินหลักสูตร</span></li>
+        <li><span class="L on" data-l="en">Graded quizzes with auto-scoring</span><span class="L" data-l="th">แบบทดสอบให้คะแนนอัตโนมัติ</span></li>
+        <li><span class="L on" data-l="en">Event registration</span><span class="L" data-l="th">การลงทะเบียนกิจกรรม</span></li>
+        <li><span class="L on" data-l="en">Pre/post knowledge checks</span><span class="L" data-l="th">การตรวจสอบความรู้ก่อน/หลัง</span></li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚙️</div>
+      <div class="feature-title"><span class="L on" data-l="en">Useful Settings</span><span class="L" data-l="th">การตั้งค่าที่มีประโยชน์</span></div>
+      <ul class="ul-clean">
+        <li><span class="L on" data-l="en">Limit to 1 response per user</span><span class="L" data-l="th">จำกัด 1 การตอบกลับต่อผู้ใช้</span></li>
+        <li><span class="L on" data-l="en">Add images or videos to questions</span><span class="L" data-l="th">เพิ่มรูปภาพหรือวิดีโอในคำถาม</span></li>
+        <li><span class="L on" data-l="en">Shuffle question order</span><span class="L" data-l="th">สุ่มลำดับคำถาม</span></li>
+        <li><span class="L on" data-l="en">Set a closing date for responses</span><span class="L" data-l="th">กำหนดวันปิดรับการตอบกลับ</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="translation-box">
+    <div class="translation-label">🌐 Key Terms — EN → TH</div>
+    <div class="trans-text">Survey = แบบสำรวจ &nbsp;·&nbsp; Quiz = แบบทดสอบ &nbsp;·&nbsp; Response = การตอบกลับ &nbsp;·&nbsp; Section = ส่วน &nbsp;·&nbsp; Score = คะแนน</div>
+  </div>
+
+  <a class="btn-link" href="https://forms.google.com" target="_blank">↗ Open Google Forms</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ GOOGLE DRIVE ═══════════════ -->
+<section class="section reveal" id="drive">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <span class="section-tag">Storage &amp; Sharing</span>
+  </div>
+  <div class="tool-badge badge-drive">📁 Google Drive</div>
+  <h2 class="section-title">
+    <span class="L on" data-l="en">Store &amp; Share Files<br>with <em>Google Drive</em></span>
+    <span class="L"    data-l="th">จัดเก็บและแชร์ไฟล์<br>ด้วย <em>Google Drive</em></span>
+  </h2>
+  <p class="section-desc">
+    <span class="L on" data-l="en">15 GB free cloud storage. Upload any file type, organize in folders, and share with anyone inside or outside your school.</span>
+    <span class="L"    data-l="th">พื้นที่เก็บข้อมูลบนคลาวด์ฟรี 15 GB อัปโหลดไฟล์ทุกประเภท จัดระเบียบในโฟลเดอร์ และแชร์กับทุกคนทั้งในและนอกโรงเรียน</span>
+  </p>
+
+  <div class="access-box" style="margin-top:1.6rem;">
+    <div class="access-icon">🔑</div>
+    <div>
+      <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
+      <span class="L on" data-l="en"> Visit <strong>drive.google.com</strong> or use the Google Drive desktop app to sync files to your computer. Same Google account as Forms.</span>
+      <span class="L"    data-l="th"> ไปที่ <strong>drive.google.com</strong> หรือใช้แอปเดสก์ท็อป Google Drive เพื่อซิงค์ไฟล์กับคอมพิวเตอร์ ใช้บัญชี Google เดียวกับ Forms</span>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num sn-drive">01</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Upload Files &amp; Folders</span><span class="L" data-l="th">อัปโหลดไฟล์และโฟลเดอร์</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click <strong>+ New → Upload File</strong> or <strong>Upload Folder</strong>. Drag-and-drop also works directly onto the page.</span>
+          <span class="L"    data-l="th">คลิก <strong>+ ใหม่ → อัปโหลดไฟล์</strong> หรือ <strong>อัปโหลดโฟลเดอร์</strong> นอกจากนี้ยังสามารถลากและวางไฟล์ลงบนหน้าเว็บได้โดยตรง</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-drive">02</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Organize with Folders</span><span class="L" data-l="th">จัดระเบียบด้วยโฟลเดอร์</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click <strong>+ New → Folder</strong>. Right-click any file or folder to move, rename, or color-code it. Star ⭐ important items for quick access.</span>
+          <span class="L"    data-l="th">คลิก <strong>+ ใหม่ → โฟลเดอร์</strong> คลิกขวาที่ไฟล์หรือโฟลเดอร์เพื่อย้าย เปลี่ยนชื่อ หรือกำหนดสี ติดดาว ⭐ รายการสำคัญเพื่อการเข้าถึงอย่างรวดเร็ว</span>
+        </div>
+        <div class="step-tip">💡 <span class="L on" data-l="en">Suggested folder structure: Subject → Unit → Week (e.g., English / Unit 1 / Week 3)</span><span class="L" data-l="th">โครงสร้างโฟลเดอร์ที่แนะนำ: วิชา → หน่วย → สัปดาห์ (เช่น ภาษาอังกฤษ / หน่วยที่ 1 / สัปดาห์ที่ 3)</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-drive">03</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Share Files or Folders</span><span class="L" data-l="th">แชร์ไฟล์หรือโฟลเดอร์</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Right-click → <strong>Share</strong>. Enter an email address or switch the link access to <strong>"Anyone with the link."</strong> Set the permission level: Viewer, Commenter, or Editor.</span>
+          <span class="L"    data-l="th">คลิกขวา → <strong>แชร์</strong> ป้อนอีเมลหรือเปลี่ยนการเข้าถึงลิงก์เป็น <strong>"ทุกคนที่มีลิงก์"</strong> กำหนดระดับสิทธิ์: ผู้ดู, ผู้แสดงความคิดเห็น หรือผู้แก้ไข</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout warn" style="margin-top:1.8rem;">
+    <strong>📋 <span class="L on" data-l="en">Sharing Levels</span><span class="L" data-l="th">ระดับการแชร์</span></strong>
+    <div class="quick-ref" style="margin-top:.7rem;">
+      <div class="ref-card">
+        <div class="ref-key" style="background:rgba(66,133,244,.1);color:var(--google)">Viewer</div>
+        <div class="ref-val"><span class="L on" data-l="en">View &amp; download only</span><span class="L" data-l="th">ดูและดาวน์โหลดเท่านั้น</span></div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-key" style="background:rgba(15,157,88,.1);color:var(--drive)">Commenter</div>
+        <div class="ref-val"><span class="L on" data-l="en">View + leave comments</span><span class="L" data-l="th">ดูและแสดงความคิดเห็น</span></div>
+      </div>
+      <div class="ref-card">
+        <div class="ref-key" style="background:rgba(255,107,53,.15);color:var(--accent1)">Editor</div>
+        <div class="ref-val"><span class="L on" data-l="en">Full edit access</span><span class="L" data-l="th">เข้าถึงและแก้ไขได้ทั้งหมด</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="translation-box">
+    <div class="translation-label">🌐 Key Terms — EN → TH</div>
+    <div class="trans-text">Upload = อัปโหลด &nbsp;·&nbsp; Folder = โฟลเดอร์ &nbsp;·&nbsp; Share = แชร์ &nbsp;·&nbsp; Storage = พื้นที่จัดเก็บ &nbsp;·&nbsp; Permission = สิทธิ์</div>
+  </div>
+
+  <a class="btn-link" href="https://drive.google.com" target="_blank">↗ Open Google Drive</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ CANVA ═══════════════ -->
+<section class="section reveal" id="canva">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <span class="section-tag">Presentations &amp; Design</span>
+  </div>
+  <div class="tool-badge badge-canva">🎨 Canva</div>
+  <h2 class="section-title">
+    <span class="L on" data-l="en">Design Beautiful <em>Presentations</em></span>
+    <span class="L"    data-l="th">ออกแบบ <em>การนำเสนอ</em> ที่สวยงาม</span>
+  </h2>
+  <p class="section-desc">
+    <span class="L on" data-l="en">A drag-and-drop design tool with a generous free plan. Create slides with themes, text, images, and your own uploaded media.</span>
+    <span class="L"    data-l="th">เครื่องมือออกแบบแบบลากและวางพร้อมแผนฟรีที่ครอบคลุม สร้างสไลด์ด้วยธีม ข้อความ รูปภาพ และสื่อที่คุณอัปโหลดเอง</span>
+  </p>
+
+  <div class="access-box" style="margin-top:1.6rem;">
+    <div class="access-icon">🔑</div>
+    <div>
+      <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
+      <span class="L on" data-l="en"> Sign up at <strong>canva.com</strong> with a Google account, email, or Facebook. Teachers can apply for <strong>Canva for Education</strong> to unlock free Pro features.</span>
+      <span class="L"    data-l="th"> ลงทะเบียนที่ <strong>canva.com</strong> ด้วยบัญชี Google, อีเมล หรือ Facebook ครูสามารถสมัคร <strong>Canva for Education</strong> เพื่อปลดล็อกฟีเจอร์ Pro ฟรี</span>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num sn-canva">01</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Start a Presentation</span><span class="L" data-l="th">เริ่มต้นการนำเสนอ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click <strong>Create a design → Presentation (16:9)</strong>. Browse thousands of free templates or start with a blank canvas.</span>
+          <span class="L"    data-l="th">คลิก <strong>สร้างการออกแบบ → การนำเสนอ (16:9)</strong> เรียกดูเทมเพลตฟรีหลายพัน หรือเริ่มจากหน้าเปล่า</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-canva">02</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Apply a Theme</span><span class="L" data-l="th">ใช้ธีม</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Left panel → <strong>Design</strong> tab → pick a <strong>Color palette</strong> or <strong>Font pair</strong>. Click <strong>"Apply to all pages"</strong> to update your entire deck at once.</span>
+          <span class="L"    data-l="th">แผงด้านซ้าย → แท็บ <strong>ออกแบบ</strong> → เลือก <strong>จานสี</strong> หรือ <strong>คู่ฟอนต์</strong> คลิก <strong>"ใช้กับทุกหน้า"</strong> เพื่ออัปเดตสำรับทั้งหมดพร้อมกัน</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-canva">03</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Add &amp; Edit Text</span><span class="L" data-l="th">เพิ่มและแก้ไขข้อความ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Left panel → <strong>Text</strong> → add a heading, subheading, or body text. Double-click any text to edit. Use the top toolbar to change font, size, color, and alignment. Try <strong>Effects</strong> (shadow, glow, curve) for visual emphasis.</span>
+          <span class="L"    data-l="th">แผงด้านซ้าย → <strong>ข้อความ</strong> → เพิ่มหัวเรื่อง หัวเรื่องย่อย หรือข้อความ ดับเบิลคลิกข้อความเพื่อแก้ไข ใช้แถบเครื่องมือด้านบนเพื่อเปลี่ยนฟอนต์ ขนาด สี และการจัดแนว ลอง <strong>เอฟเฟกต์</strong> (เงา เรืองแสง เส้นโค้ง) เพื่อเน้น</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-canva">04</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Add &amp; Import Images</span><span class="L" data-l="th">เพิ่มและนำเข้ารูปภาพ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en"><strong>From the library:</strong> Left panel → <strong>Elements</strong> or <strong>Photos</strong> → search and drag onto your slide.<br><strong>Your own files:</strong> Left panel → <strong>Uploads → Upload files</strong> (JPG, PNG, GIF, SVG, MP4 supported). Click an image frame then <strong>Replace</strong> to swap it while keeping its size and position.</span>
+          <span class="L"    data-l="th"><strong>จากคลัง:</strong> แผงด้านซ้าย → <strong>องค์ประกอบ</strong> หรือ <strong>รูปภาพ</strong> → ค้นหาแล้วลากไปยังสไลด์<br><strong>ไฟล์ของคุณ:</strong> แผงด้านซ้าย → <strong>การอัปโหลด → อัปโหลดไฟล์</strong> (รองรับ JPG, PNG, GIF, SVG, MP4) คลิกกรอบรูปภาพแล้ว <strong>แทนที่</strong> เพื่อสลับโดยรักษาขนาดและตำแหน่ง</span>
+        </div>
+        <div class="step-tip">💡 <span class="L on" data-l="en">Search for free icons under Elements → search "icon + [topic]" to find matching visuals.</span><span class="L" data-l="th">ค้นหาไอคอนฟรีใต้ Elements → ค้นหา "icon + [หัวข้อ]" เพื่อหาภาพที่เหมาะสม</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-canva">05</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Present or Download</span><span class="L" data-l="th">นำเสนอหรือดาวน์โหลด</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Top right: click <strong>Present</strong> for a fullscreen slideshow, or <strong>Share → Download</strong> to export as PDF, PPTX, PNG, or MP4 video.</span>
+          <span class="L"    data-l="th">ด้านบนขวา: คลิก <strong>นำเสนอ</strong> สำหรับสไลด์โชว์เต็มจอ หรือ <strong>แชร์ → ดาวน์โหลด</strong> เพื่อส่งออกเป็น PDF, PPTX, PNG หรือวิดีโอ MP4</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="two-col" style="margin-top:1.8rem;">
+    <div class="feature-card">
+      <div class="feature-icon">🆓</div>
+      <div class="feature-title"><span class="L on" data-l="en">Free Plan Includes</span><span class="L" data-l="th">แผนฟรีรวมถึง</span></div>
+      <ul class="ul-clean">
+        <li><span class="L on" data-l="en">250,000+ templates</span><span class="L" data-l="th">เทมเพลตมากกว่า 250,000 รายการ</span></li>
+        <li><span class="L on" data-l="en">1M+ free photos &amp; graphics</span><span class="L" data-l="th">รูปภาพและกราฟิกฟรีกว่า 1 ล้านรายการ</span></li>
+        <li><span class="L on" data-l="en">5 GB cloud storage</span><span class="L" data-l="th">พื้นที่เก็บข้อมูลบนคลาวด์ 5 GB</span></li>
+        <li><span class="L on" data-l="en">Real-time collaboration</span><span class="L" data-l="th">การทำงานร่วมกันแบบเรียลไทม์</span></li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎓</div>
+      <div class="feature-title"><span class="L on" data-l="en">Education Tips</span><span class="L" data-l="th">เคล็ดลับสำหรับการศึกษา</span></div>
+      <ul class="ul-clean">
+        <li><span class="L on" data-l="en">Apply for Canva for Education (free Pro)</span><span class="L" data-l="th">สมัคร Canva for Education (Pro ฟรี)</span></li>
+        <li><span class="L on" data-l="en">Create class teams for group projects</span><span class="L" data-l="th">สร้างทีมชั้นเรียนสำหรับงานกลุ่ม</span></li>
+        <li><span class="L on" data-l="en">Share a template link for consistent style</span><span class="L" data-l="th">แชร์ลิงก์เทมเพลตเพื่อสไตล์ที่สม่ำเสมอ</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="translation-box">
+    <div class="translation-label">🌐 Key Terms — EN → TH</div>
+    <div class="trans-text">Template = เทมเพลต &nbsp;·&nbsp; Slide = สไลด์ &nbsp;·&nbsp; Upload = อัปโหลด &nbsp;·&nbsp; Download = ดาวน์โหลด &nbsp;·&nbsp; Theme = ธีม</div>
+  </div>
+
+  <a class="btn-link" href="https://canva.com" target="_blank">↗ Open Canva</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════ GEMINI ═══════════════ -->
+<section class="section reveal" id="gemini">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <span class="section-tag">AI Infographics</span>
+  </div>
+  <div class="tool-badge badge-gemini">✨ Gemini AI (Free)</div>
+  <h2 class="section-title">
+    <span class="L on" data-l="en">Search &amp; Create <em>Infographics</em> with AI</span>
+    <span class="L"    data-l="th">ค้นหาและสร้าง <em>อินโฟกราฟิก</em> ด้วย AI</span>
+  </h2>
+  <p class="section-desc">
+    <span class="L on" data-l="en">Google Gemini is a free AI assistant that helps you research topics, draft content, and plan infographic layouts — then bring it all to life in Canva.</span>
+    <span class="L"    data-l="th">Google Gemini เป็นผู้ช่วย AI ฟรีที่ช่วยค้นคว้าหัวข้อ ร่างเนื้อหา และวางแผนเลย์เอาต์อินโฟกราฟิก แล้วนำทุกอย่างมาสร้างใน Canva</span>
+  </p>
+
+  <div class="access-box" style="margin-top:1.6rem;">
+    <div class="access-icon">🔑</div>
+    <div>
+      <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
+      <span class="L on" data-l="en"> Visit <strong>gemini.google.com</strong>. Sign in with your Google account. The free tier is fully sufficient for infographic planning and content generation.</span>
+      <span class="L"    data-l="th"> ไปที่ <strong>gemini.google.com</strong> แล้วลงชื่อเข้าใช้ด้วยบัญชี Google ระดับฟรีเพียงพอสำหรับการวางแผนอินโฟกราฟิกและการสร้างเนื้อหา</span>
+    </div>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num sn-gemini">01</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Research Your Topic</span><span class="L" data-l="th">ค้นคว้าหัวข้อของคุณ</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Type a prompt such as: <em>"Give me 5 key facts about [topic] for a high school infographic. Use simple language."</em> Gemini returns bullet points you can paste directly into Canva.</span>
+          <span class="L"    data-l="th">พิมพ์คำสั่งเช่น: <em>"ให้ข้อเท็จจริงสำคัญ 5 ประการเกี่ยวกับ [หัวข้อ] สำหรับอินโฟกราฟิกมัธยม ใช้ภาษาง่ายๆ"</em> Gemini จะส่งคืนประเด็นที่คุณวางลงใน Canva ได้ทันที</span>
+        </div>
+        <div class="step-tip">💡 <span class="L on" data-l="en">Add "in Thai" at the end of any prompt to get Thai-language content instantly.</span><span class="L" data-l="th">เพิ่ม "เป็นภาษาไทย" ต่อท้ายคำสั่งใดก็ตามเพื่อรับเนื้อหาภาษาไทยทันที</span></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-gemini">02</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Plan the Layout</span><span class="L" data-l="th">วางแผนเลย์เอาต์</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Ask: <em>"Suggest a layout for a vertical infographic with a title, 4 sections with icons, and a footer. Include icon suggestions."</em> Use this as your Canva blueprint.</span>
+          <span class="L"    data-l="th">ถาม: <em>"แนะนำเลย์เอาต์สำหรับอินโฟกราฟิกแนวตั้งที่มีชื่อเรื่อง 4 ส่วนพร้อมไอคอน และส่วนท้าย รวมคำแนะนำไอคอน"</em> ใช้สิ่งนี้เป็นแบบแปลนสำหรับ Canva</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-gemini">03</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Build in Canva</span><span class="L" data-l="th">สร้างใน Canva</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Copy Gemini's content → open Canva → search <strong>"Infographic"</strong> template → paste text into each section. Use <strong>Elements → Charts</strong> for data visualization. Download as PNG or PDF.</span>
+          <span class="L"    data-l="th">คัดลอกเนื้อหาจาก Gemini → เปิด Canva → ค้นหาเทมเพลต <strong>"Infographic"</strong> → วางข้อความในแต่ละส่วน ใช้ <strong>Elements → Charts</strong> สำหรับการแสดงข้อมูล ดาวน์โหลดเป็น PNG หรือ PDF</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num sn-gemini">04</div>
+      <div>
+        <div class="step-title"><span class="L on" data-l="en">Generate Images with Gemini (Bonus)</span><span class="L" data-l="th">สร้างรูปภาพด้วย Gemini (โบนัส)</span></div>
+        <div class="step-body">
+          <span class="L on" data-l="en">Click the <strong>image icon</strong> in Gemini or type: <em>"Generate a flat-design icon of [subject], simple, no background."</em> Download and upload directly into Canva.</span>
+          <span class="L"    data-l="th">คลิก <strong>ไอคอนรูปภาพ</strong> ใน Gemini หรือพิมพ์: <em>"สร้างไอคอน flat-design ของ [หัวข้อ] เรียบง่าย ไม่มีพื้นหลัง"</em> ดาวน์โหลดและอัปโหลดไปยัง Canva โดยตรง</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout warn">
+    <strong>🔥 <span class="L on" data-l="en">Sample Prompts to Try</span><span class="L" data-l="th">ตัวอย่าง Prompt ที่ควรลอง</span></strong>
+    <ul class="ul-clean" style="margin-top:.55rem;">
+      <li><span class="L on" data-l="en">"Summarize the water cycle in 6 bullet points for an infographic"</span><span class="L" data-l="th">"สรุปวัฏจักรน้ำใน 6 ประเด็นสำหรับอินโฟกราฟิก"</span></li>
+      <li><span class="L on" data-l="en">"Give me 3 surprising statistics about [topic] I can use in an infographic"</span><span class="L" data-l="th">"ให้สถิติที่น่าสนใจ 3 อย่างเกี่ยวกับ [หัวข้อ] สำหรับอินโฟกราฟิก"</span></li>
+      <li><span class="L on" data-l="en">"Write a catchy title and 3 section headings for a health infographic"</span><span class="L" data-l="th">"เขียนชื่อเรื่องที่น่าสนใจและหัวข้อส่วน 3 รายการสำหรับอินโฟกราฟิกด้านสุขภาพ"</span></li>
+    </ul>
+  </div>
+
+  <div class="translation-box">
+    <div class="translation-label">🌐 Key Terms — EN → TH</div>
+    <div class="trans-text">Infographic = อินโฟกราฟิก &nbsp;·&nbsp; Prompt = คำสั่ง/พร้อมต์ &nbsp;·&nbsp; Generate = สร้าง &nbsp;·&nbsp; AI = ปัญญาประดิษฐ์ &nbsp;·&nbsp; Layout = เลย์เอาต์</div>
+  </div>
+
+  <a class="btn-link" href="https://gemini.google.com" target="_blank">↗ Open Gemini AI</a>
+</section>
+
+<div class="divider"></div>
+
+<!-- QUICK REFERENCE -->
+<section class="section reveal">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <span class="section-tag">Summary</span>
+  </div>
+  <h2 class="section-title">
+    <span class="L on" data-l="en">Quick <em>Reference</em> Card</span>
+    <span class="L"    data-l="th">บัตรอ้างอิง<em>ฉบับย่อ</em></span>
+  </h2>
+  <div class="quick-ref" style="margin-top:1.4rem;">
+    <div class="ref-card">
+      <div class="ref-key" style="background:rgba(66,133,244,.1);color:var(--google)">Google Forms</div>
+      <div class="ref-val"><span class="L on" data-l="en">forms.google.com · Free · Surveys + Quizzes · Auto-collects in Sheets</span><span class="L" data-l="th">forms.google.com · ฟรี · แบบสำรวจ + แบบทดสอบ · รวบรวมอัตโนมัติใน Sheets</span></div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-key" style="background:rgba(15,157,88,.1);color:var(--drive)">Google Drive</div>
+      <div class="ref-val"><span class="L on" data-l="en">drive.google.com · 15 GB Free · Any file · 3 sharing levels</span><span class="L" data-l="th">drive.google.com · ฟรี 15 GB · ไฟล์ทุกประเภท · 3 ระดับการแชร์</span></div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-key" style="background:rgba(125,60,255,.1);color:var(--canva)">Canva</div>
+      <div class="ref-val"><span class="L on" data-l="en">canva.com · Free Plan · Slides + Infographics · Export PDF/PPTX</span><span class="L" data-l="th">canva.com · แผนฟรี · สไลด์ + อินโฟกราฟิก · ส่งออก PDF/PPTX</span></div>
+    </div>
+    <div class="ref-card">
+      <div class="ref-key" style="background:rgba(26,115,232,.1);color:var(--gemini)">Gemini AI</div>
+      <div class="ref-val"><span class="L on" data-l="en">gemini.google.com · Free · Research + Write + Image Gen</span><span class="L" data-l="th">gemini.google.com · ฟรี · ค้นคว้า + เขียน + สร้างรูปภาพ</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>
+    <span class="L on" data-l="en">Made for educators · Creative Tech Applications · HTML</span>
+    <span class="L"    data-l="th">สร้างสำหรับบรรยายเรื่อง · การประยุกต์ใช้เทคโนโลยีเพื่อการสร้างสรรค์ · HTML</span>
+  </p>
+  <p style="margin-top:.4rem;">Open in any browser · Share via USB or email · <span>♥</span></p>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    document.querySelectorAll('[data-l]').forEach(el => {
+      const isMatch = el.dataset.l === lang;
+      el.classList.toggle('on', isMatch);
+    });
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Theme Toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const lightIcon = themeToggle.querySelector('.light-icon');
+  const darkIcon = themeToggle.querySelector('.dark-icon');
+
+  function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+    if (theme === 'dark') {
+      lightIcon.style.display = 'none';
+      darkIcon.style.display = 'inline';
+    } else {
+      lightIcon.style.display = 'inline';
+      darkIcon.style.display = 'none';
+    }
+  }
+
+  // Initial theme setup
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    setTheme(savedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setTheme('dark'); // Default to dark if system prefers dark
+  } else {
+    setTheme('light'); // Default to light
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.documentElement.dataset.theme;
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+  });
+</script>
+</body>
+</html>
