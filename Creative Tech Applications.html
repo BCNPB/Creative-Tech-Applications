@@ -5,106 +5,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creative Tech Applications</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
   :root {
-    --bg: #0f0e17;
-    --card: #22213a;
-    --accent1: #FF6B6B; /* Vibrant red */
-    --accent2: #6EDCFF; /* Lighter blue */
-    --accent3: #98FB98; /* Pale green */
-    --text: #fffffe;
-    --muted: #a7a9be;
-    --border: rgba(255,255,255,0.08);
-    --google: #4285f4;
-    --drive: #0f9d58;
-    --canva: #7d3cff;
-    --gemini: #1a73e8;
+    --bg: #0f172a;
+    --card: #111827;
+    --nav-bg: rgba(15,14,23,.88);
+    --nav-popover-bg: rgba(15,14,23,.96);
+    --nav-text: #E2E8F0;
+    --accent1: #7C3AED; /* Soft indigo */
+    --accent2: #38BDF8; /* Calm sky blue */
+    --accent3: #60A5FA; /* Muted blue accent */
+    --text: #E2E8F0;
+    --muted: #94A3B8;
+    --border: rgba(226,232,240,0.12);
+    --google: #2563EB;
+    --drive: #047857;
+    --canva: #7C3AED;
+    --gemini: #0F172A;
   }
 
   [data-theme="light"] {
-    --bg: #f8f8f8;
-    --card: #ffffff;
-    --accent1: #E24B6B; /* Deeper pink/red for light mode */
-    --accent2: #5AA9E6; /* Contrasting blue for light mode */
-    --accent3: #A7D980; /* Fresh green for light mode */
-    --text: #333333;
-    --muted: #666666;
-    --border: rgba(0,0,0,0.08);
-    --google: #4285f4;
-    --drive: #0f9d58;
-    --canva: #7d3cff;
-    --gemini: #1a73e8;
-  }
+    --bg: #F8FAFC;
+    --card: #FFFFFF;
+    --nav-bg: rgba(248,250,252,.96);
+    --nav-popover-bg: rgba(255,255,255,.98);
+    --nav-text: #0F172A;
+    --accent1: #4338CA; /* muted indigo */
+    --accent2: #2563EB; /* calm blue */
+    --accent3: #2563EB; /* consistent blue accent */
+    --text: #0F172A;
+    --muted: #475569;
+    --border: rgba(15,23,42,0.08);
+    --google: #2563EB;
+    --drive: #047857;
+    --canva: #4338CA;
+    --gemini: #0F172A;
+    }
+    --bg: #F8FAFC;
+    --card: #FFFFFF;
+    --accent1: #4338CA; /* muted indigo */
+    --accent2: #2563EB; /* calm blue */
+    --accent3: #2563EB; /* consistent blue accent */
+    --text: #0F172A;
+    --muted: #475569;
+    --border: rgba(15,23,42,0.08);
+    --google: #2563EB;
+    --drive: #047857;
+    --canva: #4338CA;
+    --gemini: #0F172A;
+  
+
   * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:88px; }
   body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:400; line-height:1.8; overflow-x:hidden; font-size:1.05rem; }
 
   /* NAV */
   nav {
     position:fixed; top:0; left:0; right:0; z-index:100;
-    background:rgba(15,14,23,.88); backdrop-filter:blur(14px);
+    background:var(--nav-bg); backdrop-filter:blur(14px);
     border-bottom:1px solid var(--border);
     display:flex; align-items:center; justify-content:space-between;
     padding:0 2rem; height:60px; gap:1rem;
   }
-  .nav-logo { font-family:'DM Mono',monospace; font-size:.72rem; letter-spacing:.15em; color:var(--accent1); text-transform:uppercase; white-space:nowrap; }
+  .nav-logo { font-family:'DM Mono',monospace; font-size:.72rem; letter-spacing:.15em; color:var(--nav-text); text-transform:uppercase; white-space:nowrap; }
   .nav-links { display:flex; gap:1.2rem; list-style:none; flex-wrap:wrap; }
-  .nav-links a { font-size:.85rem; color:var(--muted); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
-  .nav-links a:hover { color:var(--text); }
+  .nav-links a { font-size:.91rem; color:var(--nav-text); text-decoration:none; letter-spacing:.04em; transition:color .2s; }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { color:var(--accent2); }
+  .nav-links a.active { color:var(--accent1); font-weight:500; }
+  .nav-links li { list-style:none; }
   .lang-toggle { display:flex; gap:.4rem; flex-shrink:0; }
-  .lang-btn { font-family:'DM Mono',monospace; font-size:.78rem; padding:.25rem .6rem; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--muted); cursor:pointer; transition:all .2s; }
+  .lang-btn { font-family:'DM Mono',monospace; font-size:.78rem; padding:.25rem .6rem; border:1px solid var(--border); border-radius:4px; background:transparent; color:var(--text); cursor:pointer; transition:all .2s; }
   .lang-btn.active { border-color:var(--accent1); color:var(--accent1); }
 
   .theme-toggle {
-    background:none; border:none; color:var(--muted); font-size:1.1rem; cursor:pointer;
+    background:none; border:none; color:var(--nav-text); font-size:1.1rem; cursor:pointer;
     margin-left:.8rem; transition:color .2s;
   }
-  .theme-toggle:hover { color:var(--text); }
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible { color:var(--text); }
+
+  .nav-toggle {
+    display:none;
+    background:none;
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--nav-text);
+    padding:.55rem .9rem;
+    font-size:1rem;
+    cursor:pointer;
+    transition:color .2s, border-color .2s, background .2s;
+  }
+  .nav-toggle:hover,
+  .nav-toggle:focus-visible {
+    color:var(--text);
+    border-color:var(--accent1);
+    outline:none;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline:2px solid var(--accent2);
+    outline-offset:3px;
+  }
+
+  @media (max-width:860px) {
+    nav { flex-wrap:wrap; align-items:flex-start; padding:1rem 1rem; gap:.75rem; }
+    .nav-toggle { display:inline-flex; }
+    .nav-links { display:none; flex-direction:column; width:100%; gap:.55rem; background:var(--nav-popover-bg); padding:1rem; border-radius:14px; margin-top:.3rem; }
+    .nav-links.open { display:flex; }
+    .nav-links a { display:block; width:100%; padding:.75rem 1rem; border-radius:8px; }
+    .lang-toggle,
+    .theme-toggle { width:100%; justify-content:flex-start; }
+    .lang-toggle { order:3; }
+    .theme-toggle { order:4; margin-left:0; }
+    .nav-logo { flex:1 1 100%; }
+    .hero { padding:5rem 1.5rem 3rem; }
+    .section { padding:3.5rem 1.2rem; }
+    .hero-sub { font-size:1rem; }
+  }
+  @media (max-width:760px) {
+    .step { grid-template-columns:auto 1fr; }
+    .section-title { font-size:clamp(1.8rem,6vw,2.4rem); }
+  }
+  @media (max-width:620px) {
+    nav { padding:1rem .75rem; }
+    .hero { padding:5rem 1rem 3rem; }
+    .section { padding:3rem .9rem; }
+    .hero-sub { font-size:.98rem; }
+    .access-box { padding:1rem 1rem; }
+    .tool-badge { width:100%; justify-content:center; }
+  }
 
   /* HERO */
-  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:6rem 2rem 4rem; position:relative; overflow:hidden; }
+  .hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:5.5rem 2rem 4rem; position:relative; overflow:hidden; }
   .hero-bg { position:absolute; inset:0; pointer-events:none;
     background:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(255,107,53,.12) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(78,205,196,.10) 0%, transparent 60%); }
-  .hero-tag { font-family:'DM Mono',monospace; font-size:.8rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent1); margin-bottom:1.5rem; border:1px solid rgba(255,107,53,.3); padding:.3rem .9rem; border-radius:20px; display:inline-block; }
-  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,7vw,5.2rem); font-weight:900; line-height:1.05; margin-bottom:1.5rem; }
+      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(124,58,237,.12) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(56,189,248,.09) 0%, transparent 55%); }
+  .hero-tag { font-family:'DM Mono',monospace; font-size:.8rem; letter-spacing:.2em; text-transform:uppercase; color:var(--accent1); margin-bottom:1.5rem; border:1px solid rgba(124,58,237,.22); padding:.3rem .9rem; border-radius:20px; display:inline-block; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.4rem,7vw,5.2rem); font-weight:900; line-height:1.08; margin-bottom:1.5rem; }
   .hero h1 span { color:var(--accent1); }
   .hero-sub { font-size:1.15rem; color:var(--muted); max-width:520px; margin:0 auto 2.5rem; }
   .hero-chips { display:flex; gap:.8rem; flex-wrap:wrap; justify-content:center; margin-top:2.5rem; }
   .hero-chip { display:flex; align-items:center; gap:.5rem; padding:.6rem 1.2rem; border-radius:8px; border:1px solid var(--border); background:rgba(255,255,255,.03); font-size:.9rem; font-weight:500; color:var(--muted); text-decoration:none; transition:all .25s; }
-  .hero-chip:hover { border-color:var(--accent2); color:var(--text); background:rgba(78,205,196,.05); transform:translateY(-2px); }
+  .hero-chip:hover { border-color:var(--accent2); color:var(--text); background:rgba(56,189,248,.08); transform:translateY(-2px); }
 
-  .hero-chip-google:hover { border-color:var(--google); background:rgba(66,133,244,.08); }
-  .hero-chip-drive:hover  { border-color:var(--drive);  background:rgba(15,157,88,.08);  }
-  .hero-chip-canva:hover  { border-color:var(--canva);  background:rgba(125,60,255,.08); }
-  .hero-chip-gemini:hover { border-color:var(--gemini); background:rgba(26,115,232,.08); }
+  .hero-chip-google:hover { border-color:var(--google); background:rgba(37,99,235,.08); }
+  .hero-chip-drive:hover  { border-color:var(--drive);  background:rgba(4,120,87,.08);  }
+  .hero-chip-canva:hover  { border-color:var(--canva);  background:rgba(124,58,237,.08); }
+  .hero-chip-gemini:hover { border-color:var(--gemini); background:rgba(15,23,42,.12); }
+  .hero-chip-google .chip-dot { background:var(--google); }
+  .hero-chip-drive .chip-dot { background:var(--drive); }
+  .hero-chip-canva .chip-dot { background:var(--canva); }
+  .hero-chip-gemini .chip-dot { background:var(--gemini); }
   .chip-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 
   /* SECTIONS */
-  .section { padding:5rem 2rem; max-width:940px; margin:0 auto; }
+  .section { padding:4rem 2rem; max-width:940px; margin:0 auto; }
   .section-header { display:flex; align-items:center; gap:.9rem; margin-bottom:2.2rem; }
-  .section-number { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.15em; color:var(--accent1); opacity:.55; }
-  .section-tag { font-family:'DM Mono',monospace; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); padding:.2rem .7rem; border:1px solid var(--border); border-radius:4px; }
+  .section-number { font-family:'DM Mono',monospace; font-size:.8rem; letter-spacing:.16em; color:var(--accent1); opacity:.75; }
+  .section-tag { font-family:'DM Mono',monospace; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); padding:.25rem .8rem; border:1px solid var(--border); border-radius:6px; }
   .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4.5vw,2.8rem); font-weight:700; line-height:1.15; margin-bottom:.7rem; }
   .section-title em { color:var(--accent2); font-style:normal; }
   .section-desc { color:var(--muted); max-width:580px; font-size:1rem; }
 
   /* TOOL BADGE */
-  .tool-badge { display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .9rem; border-radius:6px; font-family:'DM Mono',monospace; font-size:.78rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:1.4rem; }
+  .tool-badge { display:inline-flex; align-items:center; gap:.5rem; padding:.45rem 1rem; border-radius:6px; font-family:'DM Mono',monospace; font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; margin-bottom:1.4rem; }
 
   /* ACCESS BOX */
-  .access-box { display:flex; align-items:flex-start; gap:.75rem; padding:1.1rem 1.3rem; border-radius:8px; background:rgba(255,255,255,.03); border:1px solid var(--border); margin-bottom:1.8rem; font-size:.9rem; color:var(--muted); }
+  .access-box { display:flex; align-items:flex-start; gap:.9rem; padding:1.2rem 1.4rem; border-radius:8px; background:rgba(255,255,255,.04); border:1px solid var(--border); margin-bottom:1.8rem; font-size:1rem; color:var(--muted); }
   .access-box strong { color:var(--text); font-weight:500; }
   .access-icon { font-size:1.1rem; flex-shrink:0; margin-top:.1rem; }
 
   /* STEPS */
   .steps { display:flex; flex-direction:column; gap:.9rem; }
-  .step { display:grid; grid-template-columns:44px 1fr; gap:.9rem; align-items:start; padding:1.1rem 1.4rem; background:var(--card); border:1px solid var(--border); border-radius:12px; transition:border-color .2s; }
+  .step { display:grid; grid-template-columns:44px 1fr; gap:1rem; align-items:start; padding:1.2rem 1.5rem; background:var(--card); border:1px solid var(--border); border-radius:14px; transition:border-color .2s, transform .2s; }
   .step:hover { border-color:rgba(255,255,255,.15); }
   .step-num { width:30px; height:30px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-family:'DM Mono',monospace; font-size:.72rem; font-weight:500; margin-top:.1rem; flex-shrink:0; }
-  .step-title { font-weight:500; font-size:.93rem; margin-bottom:.28rem; }
-  .step-body { font-size:.85rem; color:var(--muted); line-height:1.65; }
-  .step-tip { margin-top:.55rem; padding:.45rem .7rem; background:rgba(255,255,255,.04); border-left:2px solid var(--accent3); border-radius:0 6px 6px 0; font-size:.79rem; color:var(--accent3); }
+  .step-title { font-weight:500; font-size:1rem; margin-bottom:.35rem; }
+  .step-body { font-size:1rem; color:var(--muted); line-height:1.75; }
+  .step-tip { margin-top:.55rem; padding:.55rem .8rem; background:rgba(255,255,255,.05); border-left:2px solid var(--accent3); border-radius:0 6px 6px 0; font-size:.85rem; color:var(--accent3); }
 
   /* TWO-COL */
   .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; }
@@ -117,9 +199,15 @@
   .feature-title { font-weight:500; font-size:.9rem; margin-bottom:.35rem; }
 
   /* TRANSLATION BOX */
-  .translation-box { margin-top:1.4rem; padding:1.1rem 1.4rem; background:rgba(78,205,196,.05); border:1px solid rgba(78,205,196,.2); border-radius:10px; }
-  .translation-label { font-family:'DM Mono',monospace; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); margin-bottom:.55rem; }
-  .trans-text { font-size:.83rem; color:var(--muted); }
+  .translation-box { margin-top:1.4rem; padding:1.2rem 1.5rem; background:rgba(56,189,248,.08); border:1px solid rgba(56,189,248,.16); border-radius:12px; }
+  .mt-1-6 { margin-top:1.6rem; }
+  .mt-1-8 { margin-top:1.8rem; }
+  .mt-1-4 { margin-top:1.4rem; }
+  .mt-0-7 { margin-top:.7rem; }
+  .mt-0-55 { margin-top:.55rem; }
+  .mt-0-4 { margin-top:.4rem; }
+  .translation-label { font-family:'DM Mono',monospace; font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); margin-bottom:.55rem; }
+  .trans-text { font-size:.88rem; color:var(--muted); }
 
   /* DIVIDER */
   .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
@@ -127,12 +215,17 @@
   /* QUICK REF */
   .quick-ref { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; }
   .ref-card { padding:1rem 1.2rem; background:var(--card); border:1px solid var(--border); border-radius:10px; }
-  .ref-key { font-family:'DM Mono',monospace; font-size:.72rem; padding:.2rem .5rem; border-radius:4px; display:inline-block; margin-bottom:.4rem; }
-  .ref-val { font-size:.81rem; color:var(--muted); }
+  .ref-key { font-family:'DM Mono',monospace; font-size:.75rem; padding:.25rem .55rem; border-radius:5px; display:inline-block; margin-bottom:.45rem; }
+  .ref-key-google { background:rgba(66,133,244,.1); color:var(--google); }
+  .ref-key-drive { background:rgba(15,157,88,.1); color:var(--drive); }
+  .ref-key-canva { background:rgba(125,60,255,.1); color:var(--canva); }
+  .ref-key-gemini { background:rgba(26,115,232,.1); color:var(--gemini); }
+  .ref-key-editor { background:rgba(255,107,53,.15); color:var(--accent1); }
+  .ref-val { font-size:.92rem; color:var(--muted); line-height:1.65; }
 
   /* CALLOUT */
-  .callout { padding:1.1rem 1.4rem; border-radius:10px; border:1px solid; margin:1.4rem 0; font-size:.86rem; }
-  .callout.warn { border-color:rgba(255,230,109,.3); background:rgba(255,230,109,.05); color:var(--accent3); }
+  .callout { padding:1.2rem 1.5rem; border-radius:10px; border:1px solid; margin:1.4rem 0; font-size:.92rem; }
+  .callout.warn { border-color:rgba(56,189,248,.25); background:rgba(56,189,248,.08); color:var(--accent2); }
   .callout strong { display:block; margin-bottom:.3rem; }
 
   /* FOOTER */
@@ -146,7 +239,7 @@
   .LB.on { display:block; }
 
   /* LINKS */
-  a.btn-link { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1.1rem; border-radius:8px; text-decoration:none; font-size:.81rem; font-weight:500; border:1px solid var(--border); color:var(--muted); transition:all .2s; margin-top:1rem; }
+  a.btn-link { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1.1rem; border-radius:8px; text-decoration:none; font-size:.81rem; font-weight:500; border:1px solid var(--border); color:var(--text); transition:all .2s; margin-top:1rem; }
   a.btn-link:hover { color:var(--text); border-color:rgba(255,255,255,.2); transform:translateY(-1px); }
 
   /* LIST */
@@ -172,23 +265,25 @@
 <body>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Primary navigation">
   <div class="nav-logo">🎓 Creative Tech Applications</div>
-  <ul class="nav-links">
+  <button type="button" class="nav-toggle" aria-controls="nav-links" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#forms">Forms</a></li>
     <li><a href="#drive">Drive</a></li>
     <li><a href="#canva">Canva</a></li>
     <li><a href="#gemini">Gemini</a></li>
   </ul>
   <div class="lang-toggle">
-    <button class="lang-btn active" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('th')">ภาษาไทย</button>
+    <button class="lang-btn active" onclick="setLang('en')" aria-pressed="true">EN</button>
+    <button class="lang-btn" onclick="setLang('th')" aria-pressed="false">ภาษาไทย</button>
   </div>
-  <button id="theme-toggle" class="theme-toggle">
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">
     <span class="light-icon">☀️</span>
     <span class="dark-icon" style="display:none;">🌙</span>
   </button>
 </nav>
+<main>
 
 <!-- HERO -->
 <section class="hero">
@@ -203,10 +298,10 @@
     <span class="L"    data-l="th">คู่มือการใช้งาน Google Forms, Google Drive, Canva และ Gemini AI —</span>
   </p>
   <div class="hero-chips">
-    <a class="hero-chip hero-chip-google" href="#forms"><span class="chip-dot" style="background:var(--google)"></span>Google Forms</a>
-    <a class="hero-chip hero-chip-drive" href="#drive"><span class="chip-dot" style="background:var(--drive)"></span>Google Drive</a>
-    <a class="hero-chip hero-chip-canva" href="#canva"><span class="chip-dot" style="background:var(--canva)"></span>Canva</a>
-    <a class="hero-chip hero-chip-gemini" href="#gemini"><span class="chip-dot" style="background:var(--gemini)"></span>Gemini AI</a>
+    <a class="hero-chip hero-chip-google" href="#forms"><span class="chip-dot"></span>Google Forms</a>
+    <a class="hero-chip hero-chip-drive" href="#drive"><span class="chip-dot"></span>Google Drive</a>
+    <a class="hero-chip hero-chip-canva" href="#canva"><span class="chip-dot"></span>Canva</a>
+    <a class="hero-chip hero-chip-gemini" href="#gemini"><span class="chip-dot"></span>Gemini AI</a>
   </div>
 </section>
 
@@ -229,7 +324,7 @@
   </p>
 
   <!-- ACCESS -->
-  <div class="access-box" style="margin-top:1.6rem;">
+  <div class="access-box mt-1-6">
     <div class="access-icon">🔑</div>
     <div>
       <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
@@ -298,7 +393,7 @@
 
   </div>
 
-  <div class="two-col" style="margin-top:1.8rem;">
+  <div class="two-col mt-1-8">
     <div class="feature-card">
       <div class="feature-icon">📊</div>
       <div class="feature-title"><span class="L on" data-l="en">Common Uses</span><span class="L" data-l="th">การใช้งานทั่วไป</span></div>
@@ -326,7 +421,7 @@
     <div class="trans-text">Survey = แบบสำรวจ &nbsp;·&nbsp; Quiz = แบบทดสอบ &nbsp;·&nbsp; Response = การตอบกลับ &nbsp;·&nbsp; Section = ส่วน &nbsp;·&nbsp; Score = คะแนน</div>
   </div>
 
-  <a class="btn-link" href="https://forms.google.com" target="_blank">↗ Open Google Forms</a>
+  <a class="btn-link" href="https://forms.google.com" target="_blank" rel="noopener">↗ Open Google Forms</a>
 </section>
 
 <div class="divider"></div>
@@ -347,7 +442,7 @@
     <span class="L"    data-l="th">พื้นที่เก็บข้อมูลบนคลาวด์ฟรี 15 GB อัปโหลดไฟล์ทุกประเภท จัดระเบียบในโฟลเดอร์ และแชร์กับทุกคนทั้งในและนอกโรงเรียน</span>
   </p>
 
-  <div class="access-box" style="margin-top:1.6rem;">
+  <div class="access-box mt-1-6">
     <div class="access-icon">🔑</div>
     <div>
       <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
@@ -394,19 +489,19 @@
 
   </div>
 
-  <div class="callout warn" style="margin-top:1.8rem;">
+  <div class="callout warn mt-1-8">
     <strong>📋 <span class="L on" data-l="en">Sharing Levels</span><span class="L" data-l="th">ระดับการแชร์</span></strong>
-    <div class="quick-ref" style="margin-top:.7rem;">
+    <div class="quick-ref mt-0-7">
       <div class="ref-card">
-        <div class="ref-key" style="background:rgba(66,133,244,.1);color:var(--google)">Viewer</div>
+        <div class="ref-key ref-key-google">Viewer</div>
         <div class="ref-val"><span class="L on" data-l="en">View &amp; download only</span><span class="L" data-l="th">ดูและดาวน์โหลดเท่านั้น</span></div>
       </div>
       <div class="ref-card">
-        <div class="ref-key" style="background:rgba(15,157,88,.1);color:var(--drive)">Commenter</div>
+        <div class="ref-key ref-key-drive">Commenter</div>
         <div class="ref-val"><span class="L on" data-l="en">View + leave comments</span><span class="L" data-l="th">ดูและแสดงความคิดเห็น</span></div>
       </div>
       <div class="ref-card">
-        <div class="ref-key" style="background:rgba(255,107,53,.15);color:var(--accent1)">Editor</div>
+        <div class="ref-key ref-key-editor">Editor</div>
         <div class="ref-val"><span class="L on" data-l="en">Full edit access</span><span class="L" data-l="th">เข้าถึงและแก้ไขได้ทั้งหมด</span></div>
       </div>
     </div>
@@ -417,7 +512,7 @@
     <div class="trans-text">Upload = อัปโหลด &nbsp;·&nbsp; Folder = โฟลเดอร์ &nbsp;·&nbsp; Share = แชร์ &nbsp;·&nbsp; Storage = พื้นที่จัดเก็บ &nbsp;·&nbsp; Permission = สิทธิ์</div>
   </div>
 
-  <a class="btn-link" href="https://drive.google.com" target="_blank">↗ Open Google Drive</a>
+  <a class="btn-link" href="https://drive.google.com" target="_blank" rel="noopener">↗ Open Google Drive</a>
 </section>
 
 <div class="divider"></div>
@@ -438,7 +533,7 @@
     <span class="L"    data-l="th">เครื่องมือออกแบบแบบลากและวางพร้อมแผนฟรีที่ครอบคลุม สร้างสไลด์ด้วยธีม ข้อความ รูปภาพ และสื่อที่คุณอัปโหลดเอง</span>
   </p>
 
-  <div class="access-box" style="margin-top:1.6rem;">
+  <div class="access-box mt-1-6">
     <div class="access-icon">🔑</div>
     <div>
       <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
@@ -454,8 +549,8 @@
       <div>
         <div class="step-title"><span class="L on" data-l="en">Start a Presentation</span><span class="L" data-l="th">เริ่มต้นการนำเสนอ</span></div>
         <div class="step-body">
-          <span class="L on" data-l="en">Click <strong>Create a design → Presentation (16:9)</strong>. Browse thousands of free templates or start with a blank canvas.</span>
-          <span class="L"    data-l="th">คลิก <strong>สร้างการออกแบบ → การนำเสนอ (16:9)</strong> เรียกดูเทมเพลตฟรีหลายพัน หรือเริ่มจากหน้าเปล่า</span>
+          <span class="L on" data-l="en">Click <strong>Create a design → Presentation (16:9 or 4:3)</strong>. Browse thousands of free templates or start with a blank canvas.</span>
+          <span class="L"    data-l="th">คลิก <strong>สร้างการออกแบบ → การนำเสนอ (16:9 หรือ 4:3)</strong> เรียกดูเทมเพลตฟรีหลายพัน หรือเริ่มจากหน้าเปล่า</span>
         </div>
       </div>
     </div>
@@ -507,7 +602,7 @@
 
   </div>
 
-  <div class="two-col" style="margin-top:1.8rem;">
+  <div class="two-col mt-1-8">
     <div class="feature-card">
       <div class="feature-icon">🆓</div>
       <div class="feature-title"><span class="L on" data-l="en">Free Plan Includes</span><span class="L" data-l="th">แผนฟรีรวมถึง</span></div>
@@ -534,7 +629,7 @@
     <div class="trans-text">Template = เทมเพลต &nbsp;·&nbsp; Slide = สไลด์ &nbsp;·&nbsp; Upload = อัปโหลด &nbsp;·&nbsp; Download = ดาวน์โหลด &nbsp;·&nbsp; Theme = ธีม</div>
   </div>
 
-  <a class="btn-link" href="https://canva.com" target="_blank">↗ Open Canva</a>
+  <a class="btn-link" href="https://canva.com" target="_blank" rel="noopener">↗ Open Canva</a>
 </section>
 
 <div class="divider"></div>
@@ -555,7 +650,7 @@
     <span class="L"    data-l="th">Google Gemini เป็นผู้ช่วย AI ฟรีที่ช่วยค้นคว้าหัวข้อ ร่างเนื้อหา และวางแผนเลย์เอาต์อินโฟกราฟิก แล้วนำทุกอย่างมาสร้างใน Canva</span>
   </p>
 
-  <div class="access-box" style="margin-top:1.6rem;">
+  <div class="access-box mt-1-6">
     <div class="access-icon">🔑</div>
     <div>
       <strong><span class="L on" data-l="en">Access</span><span class="L" data-l="th">การเข้าถึง</span>:</strong>
@@ -615,7 +710,7 @@
 
   <div class="callout warn">
     <strong>🔥 <span class="L on" data-l="en">Sample Prompts to Try</span><span class="L" data-l="th">ตัวอย่าง Prompt ที่ควรลอง</span></strong>
-    <ul class="ul-clean" style="margin-top:.55rem;">
+    <ul class="ul-clean mt-0-55">
       <li><span class="L on" data-l="en">"Summarize the water cycle in 6 bullet points for an infographic"</span><span class="L" data-l="th">"สรุปวัฏจักรน้ำใน 6 ประเด็นสำหรับอินโฟกราฟิก"</span></li>
       <li><span class="L on" data-l="en">"Give me 3 surprising statistics about [topic] I can use in an infographic"</span><span class="L" data-l="th">"ให้สถิติที่น่าสนใจ 3 อย่างเกี่ยวกับ [หัวข้อ] สำหรับอินโฟกราฟิก"</span></li>
       <li><span class="L on" data-l="en">"Write a catchy title and 3 section headings for a health infographic"</span><span class="L" data-l="th">"เขียนชื่อเรื่องที่น่าสนใจและหัวข้อส่วน 3 รายการสำหรับอินโฟกราฟิกด้านสุขภาพ"</span></li>
@@ -627,7 +722,7 @@
     <div class="trans-text">Infographic = อินโฟกราฟิก &nbsp;·&nbsp; Prompt = คำสั่ง/พร้อมต์ &nbsp;·&nbsp; Generate = สร้าง &nbsp;·&nbsp; AI = ปัญญาประดิษฐ์ &nbsp;·&nbsp; Layout = เลย์เอาต์</div>
   </div>
 
-  <a class="btn-link" href="https://gemini.google.com" target="_blank">↗ Open Gemini AI</a>
+  <a class="btn-link" href="https://gemini.google.com" target="_blank" rel="noopener">↗ Open Gemini AI</a>
 </section>
 
 <div class="divider"></div>
@@ -642,43 +737,64 @@
     <span class="L on" data-l="en">Quick <em>Reference</em> Card</span>
     <span class="L"    data-l="th">บัตรอ้างอิง<em>ฉบับย่อ</em></span>
   </h2>
-  <div class="quick-ref" style="margin-top:1.4rem;">
+  <div class="quick-ref mt-1-4">
     <div class="ref-card">
-      <div class="ref-key" style="background:rgba(66,133,244,.1);color:var(--google)">Google Forms</div>
+      <div class="ref-key ref-key-google">Google Forms</div>
       <div class="ref-val"><span class="L on" data-l="en">forms.google.com · Free · Surveys + Quizzes · Auto-collects in Sheets</span><span class="L" data-l="th">forms.google.com · ฟรี · แบบสำรวจ + แบบทดสอบ · รวบรวมอัตโนมัติใน Sheets</span></div>
     </div>
     <div class="ref-card">
-      <div class="ref-key" style="background:rgba(15,157,88,.1);color:var(--drive)">Google Drive</div>
+      <div class="ref-key ref-key-drive">Google Drive</div>
       <div class="ref-val"><span class="L on" data-l="en">drive.google.com · 15 GB Free · Any file · 3 sharing levels</span><span class="L" data-l="th">drive.google.com · ฟรี 15 GB · ไฟล์ทุกประเภท · 3 ระดับการแชร์</span></div>
     </div>
     <div class="ref-card">
-      <div class="ref-key" style="background:rgba(125,60,255,.1);color:var(--canva)">Canva</div>
+      <div class="ref-key ref-key-canva">Canva</div>
       <div class="ref-val"><span class="L on" data-l="en">canva.com · Free Plan · Slides + Infographics · Export PDF/PPTX</span><span class="L" data-l="th">canva.com · แผนฟรี · สไลด์ + อินโฟกราฟิก · ส่งออก PDF/PPTX</span></div>
     </div>
     <div class="ref-card">
-      <div class="ref-key" style="background:rgba(26,115,232,.1);color:var(--gemini)">Gemini AI</div>
+      <div class="ref-key ref-key-gemini">Gemini AI</div>
       <div class="ref-val"><span class="L on" data-l="en">gemini.google.com · Free · Research + Write + Image Gen</span><span class="L" data-l="th">gemini.google.com · ฟรี · ค้นคว้า + เขียน + สร้างรูปภาพ</span></div>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <p>
     <span class="L on" data-l="en">Made for educators · Creative Tech Applications · HTML</span>
     <span class="L"    data-l="th">สร้างสำหรับบรรยายเรื่อง · การประยุกต์ใช้เทคโนโลยีเพื่อการสร้างสรรค์ · HTML</span>
   </p>
-  <p style="margin-top:.4rem;">Open in any browser · Share via USB or email · <span>♥</span></p>
+  <p class="mt-0-4">Open in any browser · Share via USB or email · <span>♥</span></p>
 </footer>
 
 <script>
   function setLang(lang) {
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      const isMatch = b.getAttribute('onclick') === `setLang('${lang}')`;
+      b.classList.toggle('active', isMatch);
+      b.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+    });
     document.querySelectorAll('[data-l]').forEach(el => {
       const isMatch = el.dataset.l === lang;
       el.classList.toggle('on', isMatch);
     });
   }
+
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Open navigation menu');
+      }
+    });
+  });
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
@@ -696,9 +812,11 @@
     if (theme === 'dark') {
       lightIcon.style.display = 'none';
       darkIcon.style.display = 'inline';
+      themeToggle.setAttribute('aria-pressed', 'true');
     } else {
       lightIcon.style.display = 'inline';
       darkIcon.style.display = 'none';
+      themeToggle.setAttribute('aria-pressed', 'false');
     }
   }
 
